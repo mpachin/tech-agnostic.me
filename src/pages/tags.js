@@ -12,6 +12,9 @@ const TagsPage = ({
     site: {
       siteMetadata: { title },
     },
+    siteSearchIndex: {
+      index,
+    },
   },
   location,
 }) => (
@@ -23,7 +26,7 @@ const TagsPage = ({
 
     <div>
       <h2>Search</h2>
-      <Search />
+      <Search index={index} />
     </div>
 
     <div>
@@ -59,6 +62,9 @@ export const pageQuery = graphql`
         fieldValue
         totalCount
       }
+    }
+    siteSearchIndex {
+      index
     }
   }
 `;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Index } from 'elasticlunr';
-import { StaticQuery, graphql, Link } from 'gatsby';
+import { Link } from 'gatsby';
 
 import TagsListing from './tags-listing';
 import { rhythm } from '../utils/typography';
@@ -31,7 +31,7 @@ const SearchResult = ({
     </li>
 );
 
-class SearchInternal extends Component {
+class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -64,10 +64,12 @@ class SearchInternal extends Component {
     }
 
     getOrCreateIndex() {
+        const { index } = this.props;
+
         return this.index
             ? this.index
             // Create an elastic lunr index and hydrate with graphql query results
-            : Index.load(this.props.data.siteSearchIndex.index);
+            : Index.load(index);
     }
 
     search(evt) {
@@ -86,19 +88,4 @@ class SearchInternal extends Component {
         });
     }
 }
-
-const Search = () => (
-    <StaticQuery
-        query={searchQuery}
-        render={data => <SearchInternal data={data} />}
-    />
-);
-
 export default Search;
-
-export const searchQuery = graphql`query
-SearchIndexQuery {
-    siteSearchIndex {
-      index
-    }
-}`;
